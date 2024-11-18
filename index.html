@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Korkutucu Mesaj</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 50px;
+            margin: 0;
+            height: 100vh;
+        }
+        h1 {
+            font-size: 50px;
+            color: red;
+        }
+        .message {
+            font-size: 25px;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeIn 3s forwards;
+        }
+        button {
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        button:hover {
+            background-color: darkred;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Bir şeyler yanlış!</h1>
+    <div id="message1" class="message"></div>
+    <div id="message2" class="message"></div>
+    <div id="message3" class="message"></div>
+    
+    <button onclick="startGame()">Devam Et</button>
+
+    <script>
+        let message1 = [
+            "Bir şeyler yanlış... Hemen gitmelisin.",
+            "Ama nereye gideceksin?",
+            "Kapı mı? Pencere mi?",
+        ];
+        let message2 = [
+            "Kapı yavaşça açılır... ",
+            "Ancak... Kapının ardında seni izleyen biri var!",
+            "Pencereyi açarsın, fakat...",
+            "Dışarıda birisi seni bekliyor. Ancak bir adım daha attığında kaybolur.",
+        ];
+        let message3 = [
+            "Ve şimdi, tuhaf bir gülüş duyuyorsun...",
+            "Birden her şey sessizleşiyor, sadece adımlarını duyuyorsun.",
+            "Bir telefon çalıyor, ama senin numaranı kimse bilmiyor...",
+            "Ekrandaki yazı değişiyor, bir şeyler yazıyor... 'Beni bulmalısın...'",
+            "Ve aniden bir rüzgar tüm odanı sarar, kapılar ve pencereler açılır.",
+        ];
+
+        let currentMessageIndex = 0;
+
+        function startGame() {
+            document.querySelector("button").style.display = "none"; // Butonu gizle
+            showMessage(message1);
+        }
+
+        function showMessage(messages) {
+            let messageElement = document.getElementById("message1");
+            
+            if (currentMessageIndex < messages.length) {
+                messageElement.innerText = messages[currentMessageIndex];
+                messageElement.style.opacity = 1; // Mesajı görünür yap
+                currentMessageIndex++;
+                setTimeout(() => {
+                    showMessage(messages); // 3 saniye sonra bir sonraki mesajı göster
+                }, 3000); 
+            } else {
+                currentMessageIndex = 0; // Mesaj sırasını sıfırla
+                if (messages === message1) {
+                    setTimeout(() => {
+                        showMessage(message2); // message1 bittikten sonra message2'yi göster
+                    }, 1000);
+                } else if (messages === message2) {
+                    setTimeout(() => {
+                        showMessage(message3); // message2 bittikten sonra message3'ü göster
+                    }, 1000);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
